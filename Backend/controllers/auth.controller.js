@@ -10,7 +10,7 @@ export const signup  = async (req,res)=>{
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if(!emailRegex.test(email)){
-            return res.status(400).json({error:"invalid email formant"});
+            return res.status(400).json({error:"invalid email format"});
         }
 
         const  existingUser = await User.findOne({username});
