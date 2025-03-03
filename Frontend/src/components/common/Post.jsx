@@ -120,7 +120,7 @@ const Post = ({ post }) => {
 	};
 
 	const handleLikePost = () => {
-		if(isLiking) return;
+		if(isLiked) return;
 		likePost();
 	};
 

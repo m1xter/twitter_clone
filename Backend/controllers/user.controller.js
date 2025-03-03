@@ -3,11 +3,27 @@ import Notification from "../models/notificatio.model.js";
 import bcrypt from "bcryptjs";
 import {v2 as cloudinary} from "cloudinary"
 
+
+export const getAllusers = async (req,res)=>{
+ try {
+    const users = await User.find({}).select("_id username ")
+
+    if(!users){
+        return res.status(404).json({message:"users not found"});
+    }
+
+    res.status(200).json(users)
+ } catch (error) {
+    console.log("error in getAllusers:",error.message);
+    res.status(500).json({error: error.message});
+ }   
+}
+
 export const getUserProfile = async (req,res)=>{
     const {username} = req.params;
 
     try {
-        const user = await User.findOne({username}).select("-password");
+        const user = await User.findOne({username}).select("-password");        
         if(!user){
             return res.status(404).json({message:"user not found"});
         }
@@ -80,7 +96,6 @@ export const getSuggestedUsers = async(req,res)=>{
         res.status(500).json({error: error.message});
     }
 }
-
 
 export const updateUserProfile = async(req,res)=>{
     const {fullName, email, username,currentpassword,newpassword,bio,link} = req.body;
